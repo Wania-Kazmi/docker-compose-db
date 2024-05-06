@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "compose-db"
+version = "0.1.0"
+description = ""
+authors = ["Wania-Kazmi <waniakz019@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.0"
+uvicorn = "^0.29.0"
+sqlmodel = "^0.0.18"
+psycopg = {extras = ["binary"], version = "^3.1.18"}
+python-multipart = "^0.0.9"
+pydantic = "^2.7.1"
+psycopg2-binary = "^2.9.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
