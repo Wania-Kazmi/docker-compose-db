@@ -1,0 +1,88 @@
+name: "fastapi"
+services:
+  api:
+    build: 
+      context: ./ 
+      dockerfile: Dockerfile  
+    ports: 
+      - 8000:8000 
+    container_name: api
+    networks:
+      - my-api-net
+    depends_on:            #here our fast api is dependent on the db so we tell that this fastapi service is dependent on the postgres_db container so when u run the docker compose it will always run postgres_db first then api service to avoid error
+      - postgres_db
+    environment:
+      - DATABASE_URL=postgresql://waniakazmi:my_password@PostgresCont:5432/mydatabase
+  postgres_db:
+    image: postgres:latest  #use the official postgres image
+    restart: always
+    container_name: PostgresCont
+    environment:
+      - POSTGRES_USER=waniakazmi
+      - POSTGRES_PASSWORD=my_password
+      - POSTGRES_DB=mydatabase
+    ports:
+      - "5433:5432"    #externalPort:internalPort
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+    networks:
+      - my-api-net
+
+volumes:
+  postgres_db:
+    driver: local
+
+networks:
+  my-api-net:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# version: "3.9"
+
+# name: myapi
+
+# services:
+#   api:
+#     build:
+#       context: ./todo
+#       dockerfile: Dockerfile.dev
+#     depends_on:
+#         - postgres_db
+#     ports:
+#       - "8000:8000"  # Expose container port 8000 to host port 8000  
+#     networks:
+#       - my-api-net
+#   postgres_db:
+#     image: postgres:latest  # Use the official PostgreSQL image
+#     restart: always
+#     container_name: PostgresCont
+#     environment:
+#         - POSTGRES_USER=ziakhan
+#         - POSTGRES_PASSWORD=my_password
+#         - POSTGRES_DB=mydatabase
+#     ports:
+#         - '5433:5432'
+#     volumes:
+#         - postgres_db:/var/lib/postgresql/data
+#     networks:
+#       - my-api-net
+
+# volumes:
+#   postgres_db:
+#     driver: local
+
+# networks:
+#   my-api-net:  # Define the custom network
